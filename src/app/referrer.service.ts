@@ -8,7 +8,7 @@ export class ReferrerService {
 
   constructor(private http: HttpClient) { }
 
-  getReferrers() {
-    return this.http.get('http://localhost:3000/referrers');
+  getReferrer(name: string) {
+    return this.http.get(`http://localhost:3000/referrers?name=${name}`);
   }
 }
