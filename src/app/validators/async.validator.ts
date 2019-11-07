@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 import { catchError, map } from 'rxjs/operators';
 import { ReferrerService } from '../referrer.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ReferrerValidator implements AsyncValidator {
@@ -17,7 +17,7 @@ export class ReferrerValidator implements AsyncValidator {
   ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
     return this.referrerService.getReferrer(ctrl.value).pipe(
       map((referrer: any) => (!referrer.length ? { referrerInValid: true } : null)),
-      catchError(() => null)
+      catchError((error): any =>  of({referrerInValid: error.message}))
     );
   }
 }

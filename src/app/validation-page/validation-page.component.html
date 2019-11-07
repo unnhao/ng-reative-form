@@ -2,49 +2,46 @@
   <form [formGroup]="validationForm" (ngSubmit)="submit()">
     <div class="form-row">
       <div class="form-group col-md-12">
-        <label for="inputName">Name</label>
+        <label for="inputName">Name {{(name.touched && name.invalid) ? (name.errors | json) : ''}}</label>
         <input id="inputName" type="text" class="form-control" [ngClass]="checkValidStyle(name)" placeholder="Name" formControlName="name">
-        <label for="inputName">{{name.errors | json}}</label>
       </div>
       <div class="form-group col-md-12">
-        <label for="inputGender">Gender</label>
-        <input type="text" class="form-control" [ngClass]="checkValidStyle(gender)" id="inputGender" placeholder="Gender" formControlName="gender">
-        <label for="inputGender">{{gender.errors | json}}</label>
+        <label for="inputGender">Gender {{(gender.touched && gender.invalid) ? (gender.errors | json) : ''}}</label>
+        <select id="inputGender" class="form-control" [ngClass]="checkValidStyle(gender)" formControlName="gender">
+            <option value="MEN">MEN</option>
+            <option value="FEMEN">FEMEN</option>
+            <option value="HIDDEN">HIDDEN</option>
+        </select>
       </div>
     </div>
     <div class="form-group">
-      <label for="inputAge">Age >= 50</label>
+      <label for="inputAge">Age {{(age.touched && age.invalid) ? (age.errors | json) : ''}}</label>
       <input type="text" class="form-control" [ngClass]="checkValidStyle(age)" id="inputAge" placeholder="Age" formControlName="age">
-      <label for="inputAge">{{age.errors | json}}</label>
     </div>
     <div class="form-group">
-      <label for="inputEmail">Email</label>
+      <label for="inputEmail">Email {{(email.touched && email.invalid) ? (email.errors | json) : ''}}</label>
       <input type="text" class="form-control" [ngClass]="checkValidStyle(email)" id="inputEmail" placeholder="Email" formControlName="email">
-      <label for="inputEmail">{{email.errors | json}}</label>
     </div>
     <div class="form-row">
       <div class="form-group col-md-8">
-        <label for="inputCity">City</label>
+        <label for="inputCity">City {{(city.touched && city.invalid) ? (city.errors | json) : ''}}</label>
         <select id="inputCity" class="form-control" [ngClass]="checkValidStyle(city)" formControlName="city">
           <option value="{{city.name}}" *ngFor="let city of cityData">{{city.name}}</option>
         </select>
-        <label for="inputCity">{{city.errors | json}}</label>
       </div>
       <div class="form-group col-md-4">
-        <label for="inputZip">Zip</label>
+        <label for="inputZip">Zip {{(zip.touched && zip.invalid) ? (zip.errors | json) : ''}}</label>
         <input type="text" class="form-control" [ngClass]="checkValidStyle(zip)" id="inputZip" formControlName="zip">
-        <label for="inputZip">{{zip.errors | json}}</label>
       </div>
     </div>
     <div class="form-group">
-      <label for="inputReferrer">Referrer</label>
-      <input type="text" class="form-control"   [ngClass]="checkValidStyle(referrer)" id="inputReferrer" placeholder="Referrer" formControlName="referrer">
-      <label for="inputReferrer">{{referrer.errors | json}}</label>
+      <label for="inputReferrer">Referrer {{(referrer.touched && referrer.invalid) ? (referrer.errors | json) : ''}}</label>
+      <input type="text" class="form-control" [ngClass]="checkValidStyle(referrer)" id="inputReferrer" placeholder="Referrer" formControlName="referrer">
     </div>
     <button type="submit" class="btn btn-danger" (click)="reset()">Reset</button>
     <button type="submit" class="btn btn-primary">Submit</button>
     <p>
-        Form Status: {{ validationForm.status }}
-      </p>
+      Form Status: {{ validationForm.status }}
+    </p>
   </form>
 </div>

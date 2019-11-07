@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { ReferrerValidator } from '../validators/async.validator';
+import { filter, map, take, every } from 'rxjs/operators';
 
 @Component({
   selector: 'app-validation-page',
@@ -56,28 +57,17 @@ export class ValidationPageComponent implements OnInit {
 
     // listener
     this.validationForm.get('city').valueChanges.subscribe((value: any) => {
-      const target = this.cityData.find((zipCode: any) => zipCode.name === value);
-      if (this.zip.value !== target.zip) {
-        this.validationForm.patchValue({
-          zip: target.zip
-        });
-      }
+        const target = this.cityData.find((zipCode: any) => zipCode.name === value);
+        target ? this.zip.setErrors(null) : this.zip.setErrors({zipInValid: true});
+        this.validationForm.patchValue({ zip: target ?　target.zip : '' }, {emitEvent: false});
+        this.zip.markAsTouched();
     });
 
     this.validationForm.get('zip').valueChanges.subscribe((value: any) => {
-      const target = this.cityData.find((zipCode: any) => {
-        return zipCode.zip === value;
-      });
-      if (!target) {
-        return this.zip.setErrors({
-          zipInvalid: true
-        });
-      }
-      if (this.city.value !== target.name) {
-        this.validationForm.patchValue({
-          city: target.name
-        });
-      }
+        const target = this.cityData.find((zipCode: any) => zipCode.zip === value);
+        target ? this.zip.setErrors(null) : this.zip.setErrors({zipInValid: true});
+        this.validationForm.patchValue({ city: target ?　target.name : '' }, {emitEvent: false});
+        this.city.markAsTouched();
     });
   }
 
@@ -121,6 +111,7 @@ export class ValidationPageComponent implements OnInit {
     if (this.validationForm.valid) {
       alert('Submit');
       this.reset();
+      this.validationForm.markAsUntouched();
     }
   }
 }
